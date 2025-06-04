@@ -1,0 +1,1 @@
+systemctl stop nginx 2>/dev/null || true && systemctl disable nginx 2>/dev/null || true && pkill -f nginx || true && cd /workspace/ComfyUI && source venv/bin/activate && fuser -k 3001/tcp || true && python main.py --listen --port 3001
