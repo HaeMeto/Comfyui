@@ -12,10 +12,10 @@ command -v fuser >/dev/null 2>&1 || (apt update -qq && apt install -y -qq psmisc
 # Install Cloudflare Tunnel jika belum ada
 if [ ! -f "$CF_DIR/cloudflared" ]; then
     echo "[$(date)] Installing Cloudflare Tunnel..."
-    mkdir -p $CF_DIR
-    curl -L -o $CF_DIR/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
-    chmod +x $CF_DIR/cloudflared
-    mv cloudflared /usr/local/bin/
+    sudo mkdir -p $CF_DIR
+    sudo curl -L -o $CF_DIR/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+    sudo chmod +x $CF_DIR/cloudflared
+    sdup mv cloudflared /usr/local/bin/
 fi
 
 # Cek apakah service cloudflared sudah ada
@@ -27,7 +27,7 @@ else
         echo "Cloudflared service sudah terinstall di /etc/init.d/cloudflared."
     else
         echo "Cloudflared service belum ada, akan diinstall..."
-        nohup $CF_DIR/cloudflared service install $TOKEN > /workspace/cloudflared.log 2>&1 &
+        sudo nohup $CF_DIR/cloudflared service install $TOKEN > /workspace/cloudflared.log 2>&1 &
         # nohup $CF_DIR/cloudflared tunnel --url http://localhost:3001 --token $TOKEN > /workspace/cloudflared.log 2>&1 &
     fi
 fi
